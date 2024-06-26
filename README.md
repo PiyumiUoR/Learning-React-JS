@@ -42,4 +42,4 @@ alert(name);
 
 Below image shows that the varibale cannot be accessed throught the _window_ which means that the variable is not valid outside the _if_ statement. 
 
-![let variable inside 'if'](.\images\2.JPG)
+![let variable inside 'if'](./images/2.JPG)
