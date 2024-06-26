@@ -27,7 +27,7 @@ alert(name)
 ```
 Above code is works in javascript and pops out the name variable into the window. The variable can be accessed and valid inside the whole code. Below is the console image that to prove that the variable can be accessed from outside of the _if_ statement. 
 
-![var variable inside 'if'](.\images\1.JPG)
+![var variable inside 'if'](./images/1.JPG)
 
 If _let_ is used, the variable name is only accepted inside of the defined scope and the varibale name still can be used outside the defined statements. 
 
@@ -42,4 +42,4 @@ alert(name);
 
 Below image shows that the varibale cannot be accessed throught the _window_ which means that the variable is not valid outside the _if_ statement. 
 
-![let variable inside 'if'](.\images\2.JPG)
+![let variable inside 'if'](./images/2.JPG)
