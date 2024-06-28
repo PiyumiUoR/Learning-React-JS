@@ -4,7 +4,9 @@ This repository contains the exercises done by me during the Udemy course "React
 
 Link to the course is [here.](https://www.udemy.com/share/101rkI3@zMJhoBQX62DEpDKqhDh4Nq8DCl1wR1sLTXoIBZfNaJEtlFf0DKuzaPrA6jxET6DPOA==/)
 
-## Variable types
+## Modern Javascript
+
+### Variable types
 
 There are 2 variable types.
 1. const
@@ -44,7 +46,7 @@ Below image shows that the varibale cannot be accessed throught the _window_ whi
 
 ![let variable inside 'if'](./images/2.JPG)
 
-## Template strings
+### Template strings
 
 Template strings are used as an alternative for _string concatenation_. Here, the lecturer shows the old way of string concatenation and using the template strings. 
 
@@ -66,7 +68,7 @@ This method is useful in situations where we have to call URLs and endpoints fro
 ![template strings 1](./images/3.JPG)
 ![template strings 2](./images/4.JPG)
 
-## Default parameters
+### Default parameters
 
 This is an option of ES6 update to passing deafult parameters to function arguments and more. 
 
@@ -102,7 +104,7 @@ When the function is called with no arguments, the output is generated with the 
 
 ![default parameters 3](./images/7.JPG)
 
-## Arrow function
+### Arrow function
 
 These are different from the regular functions. The sample regular function looks like below. 
 
@@ -155,7 +157,7 @@ let greeting = () => alert(`Hello everyone`);
 greeting();
 ```
 
-## Arrow function and _this_ function
+### Arrow function and _this_ function
 
 In JavaScript when we create a function they become a part of the global _window_ object and when you use _this_ keyword it refers to the enclosing context. Using _this_ keyword ensures that it refers to the function within the function within the two curly braces. Below is an example where the function has become a method inside of the _window_ object and how the keyword _this_ has been used to directly access the _window_ object. 
 
@@ -226,3 +228,94 @@ nepal.printWithDash();
 ```
 
 ![this 1](./images/14.JPG)
+
+### Destructuring objects
+
+This is a way of breaking down obects or arrays into variables. Below example shows how it works. 
+
+```js
+let thingsToDo = {
+    morning: "Exercise",
+    afternoon: "Work",
+    evening: "Code",
+    night: ["sleep", "dream"]
+}
+
+let {morning, afternoon} = thingsToDo; //object destructuring
+
+console.log(morning, ' - ', afternoon)
+```
+
+The outout in the console shows that the _morning_ and _afternoon_ can be considered as seperate variables after the object destructuring.  
+
+![obj des 1](./images/15.JPG)
+
+Below is a bit complex example.
+
+**Method 1:**
+
+```js
+let uniStudent = student => {
+    // let {name, university } = student;
+    console.log(`${student.name} from ${student.university}`);
+};
+
+uniStudent({ 
+    name: 'Piyumi',
+    university: 'University of Oulu'
+});
+```
+
+**Method 2:**
+
+```js
+let uniStudent = student => {
+    let {name, university } = student;
+    console.log(`${name} from ${university}`);
+};
+
+uniStudent({ 
+    name: 'Piyumi',
+    university: 'University of Oulu'
+});
+```
+
+**Method 3:**
+
+```js
+let uniStudent = ({name, university }) => {
+    console.log(`${name} from ${university}`);
+};
+
+uniStudent({ 
+    name: 'Piyumi',
+    university: 'University of Oulu'
+});
+```
+
+All the methods generates the same output and the way of using can be selected as preferred. 
+
+Output:
+
+![obj des 2](./images/16.JPG)
+
+### Destructuring arrays
+
+This is just like dealing with the destructuring objects in previous section. 
+
+```js
+// let [theMountain] = ['Everest', 'Fish Tail', 'Annapurna']; //choose the first element
+// let [, theMountain] = ['Everest', 'Fish Tail', 'Annapurna']; //choose the second element
+let [, , theMountain] = ['Everest', 'Fish Tail', 'Annapurna']; //choose the third element
+
+console.log(theMountain)
+```
+
+The **' , '** defines the number of elements in the array that we need to skip. The output for each selection of the elements is as below. 
+
+![arr des 1](./images/17.JPG)
+![arr des 2](./images/18.JPG)
+![arr des 3](./images/19.JPG)
+
+### Restructuring
+

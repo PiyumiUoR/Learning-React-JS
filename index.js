@@ -85,3 +85,58 @@
 
 // nepal.printWithDash();
 
+// exercise 8
+
+// let thingsToDo = {
+//     morning: "Exercise",
+//     afternoon: "Work",
+//     evening: "Code",
+//     night: ["sleep", "dream"]
+// }
+
+// let {morning, night} = thingsToDo; //object destructuring
+
+// console.log(morning, ' - ', night)
+
+//////Method 1
+
+// let uniStudent = student => {
+//     // let {name, university } = student;
+//     console.log(`${student.name} from ${student.university}`);
+// };
+
+// uniStudent({ 
+//     name: 'Piyumi',
+//     university: 'University of Oulu'
+// });
+
+//////Method 2
+
+// let uniStudent = student => {
+//     let {name, university } = student;
+//     console.log(`${name} from ${university}`);
+// };
+
+// uniStudent({ 
+//     name: 'Piyumi',
+//     university: 'University of Oulu'
+// });
+
+//////Method 3
+
+// let uniStudent = ({name, university }) => {
+//     console.log(`${name} from ${university}`);
+// };
+
+// uniStudent({ 
+//     name: 'Piyumi',
+//     university: 'University of Oulu'
+// });
+
+// let [theMountain] = ['Everest', 'Fish Tail', 'Annapurna']; //choose the first element
+// let [, theMountain] = ['Everest', 'Fish Tail', 'Annapurna']; //choose the second element
+let [, , theMountain] = ['Everest', 'Fish Tail', 'Annapurna']; //choose the third element
+
+console.log(theMountain)
+
+
