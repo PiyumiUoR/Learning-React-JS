@@ -319,3 +319,171 @@ The **' , '** defines the number of elements in the array that we need to skip. 
 
 ### Restructuring
 
+Same as destructuring the object, we can restructure object from available variables. 
+
+Below is an example of one way of doing it. The variables are restructured in the _var adventureClimbing_ object. 
+
+```js
+var name = 'Everest';
+var height = 8848;
+var output = function() {
+    console.log(`Mt. ${this.name} is ${this.height} meters tall.`);
+};
+
+var adventureClimbing = { name, height, output };
+adventureClimbing.output();
+```
+
+**Method 2:**
+
+```js
+var adventureClimbing = { 
+    name: 'Everest', 
+    height: 8848,
+    output: function() {
+    // or output() {
+        console.log(`Mt. ${this.name} is ${this.height} meters tall.`);
+    }
+};
+adventureClimbing.output();
+```
+
+The output of the restructuring eample is generated as below. 
+
+![res](./images/20.JPG)
+
+### Spread and rest operator
+
+For this operator, resct JS uses `...`. This is used to combine two arrays of objects together. The first example shows that how it can be used in combining arrays. 
+
+```js
+var mountains = ['everest', 'Fish tail', 'Annapurna']
+var mountainsInJapan = ['Fuji']
+
+var allMountains = [...mountains, ...mountainsInJapan]
+console.log(allMountains)
+```
+
+Output:
+
+![spread 1](./images/21.JPG)
+
+The example 2 shows how the spread operator work with the objects. 
+
+```js
+var day = {
+    breakfast: 'toast with milk',
+    lunch: 'rice with cicken curry'
+}
+var night = {
+    dinner: 'noodle soup'
+}
+
+var picnic = {...day, ...night}
+console.log(picnic)
+```
+
+Output:
+
+![spread 2](./images/22.JPG)
+
+This methos is very useful in API calls. 
+
+The below example shows how the operator can be used as _rest_ operator.
+
+```js
+var rivers = ['Sunkoshi', 'Tamakoshhi', 'Saptakoshi'];
+var [first, ...rest] = rivers
+console.log(first)
+console.log(rest)
+```
+
+Output:
+
+![rest](./images/23.JPG)
+
+### Class, constructor and super
+
+In early version of JS, the classes were not directly defined as classes. The classes were defined as functions (in JS function acts as an object) first, and then a method to that function was defined using ```prototype``` keyword, to introduce what does it do. The new variable under that function behaves according the _function_ and the _method_ defined. 
+
+```js
+function Holiday (destination, days) {
+    this.destination = destination;
+    this.days = days;
+}
+
+Holiday.prototype.info = function() {
+    console.log(this.destination + " | " + this.days + " days");
+};
+
+var nepal = new Holiday("Nepal", 30);
+console.log(nepal.info())
+```
+
+Output:
+
+![class 1](./images/24.JPG)
+
+In next example it shows how _class_ cane be create a class with methods with properties. In below example, _constructor_ and _info_ are methods of the class and those have properties and arguments on its own. 
+
+```js
+class Holiday {
+    constructor(destination, days) {
+        this.destination = destination;
+        this.days = days; 
+    }
+    
+    info() {
+        console.log(`${this.destination} will take ${this.days} days.`);
+    }
+}
+
+const trip = new Holiday('Kathmandu, Nepal', 30); 
+console.log(trip.info());
+```
+
+Output:
+
+![class 2](./images/25.JPG)
+
+Below example shows how the classes can be extended into children classes. Child class has the same properties of the parent class. 
+
+```js
+// super class
+
+class Holiday {
+    constructor(destination, days) {
+    this.destination = destination;
+    this.days = days; 
+    }
+    info() {
+    console.log(`${this.destination} will take ${this.days} days.`);
+    }
+}
+
+
+// sub class
+
+class Expedition extends Holiday {
+    constructor (destination, days, gear) {
+        super(destination, days);
+        this.gear = gear;
+    }
+    info() {
+        super.info();
+        console.log(`Bring your ${this.gear.join(" and your ")} .`)
+    }
+}
+
+const tripWithGear = new Expedition("Everest", 30, ["Sunglasses", "Flags", "Camera"]);
+tripWithGear.info();
+```
+
+Output:
+
+![class 3](./images/26.JPG)
+
+## React JS
+
+
+
