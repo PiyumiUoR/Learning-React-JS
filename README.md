@@ -4,9 +4,9 @@ This repository contains the exercises done by me during the Udemy course "React
 
 Link to the course is [here.](https://www.udemy.com/share/101rkI3@zMJhoBQX62DEpDKqhDh4Nq8DCl1wR1sLTXoIBZfNaJEtlFf0DKuzaPrA6jxET6DPOA==/)
 
-## Modern Javascript
+# Modern Javascript
 
-### Variable types
+## Variable types
 
 There are 2 variable types.
 1. const
@@ -46,7 +46,7 @@ Below image shows that the varibale cannot be accessed throught the _window_ whi
 
 ![let variable inside 'if'](./images/2.JPG)
 
-### Template strings
+## Template strings
 
 Template strings are used as an alternative for _string concatenation_. Here, the lecturer shows the old way of string concatenation and using the template strings. 
 
@@ -68,7 +68,7 @@ This method is useful in situations where we have to call URLs and endpoints fro
 ![template strings 1](./images/3.JPG)
 ![template strings 2](./images/4.JPG)
 
-### Default parameters
+## Default parameters
 
 This is an option of ES6 update to passing deafult parameters to function arguments and more. 
 
@@ -104,7 +104,7 @@ When the function is called with no arguments, the output is generated with the 
 
 ![default parameters 3](./images/7.JPG)
 
-### Arrow function
+## Arrow function
 
 These are different from the regular functions. The sample regular function looks like below. 
 
@@ -157,7 +157,7 @@ let greeting = () => alert(`Hello everyone`);
 greeting();
 ```
 
-### Arrow function and _this_ function
+## Arrow function and _this_ function
 
 In JavaScript when we create a function they become a part of the global _window_ object and when you use _this_ keyword it refers to the enclosing context. Using _this_ keyword ensures that it refers to the function within the function within the two curly braces. Below is an example where the function has become a method inside of the _window_ object and how the keyword _this_ has been used to directly access the _window_ object. 
 
@@ -229,7 +229,7 @@ nepal.printWithDash();
 
 ![this 1](./images/14.JPG)
 
-### Destructuring objects
+## Destructuring objects
 
 This is a way of breaking down obects or arrays into variables. Below example shows how it works. 
 
@@ -299,7 +299,7 @@ Output:
 
 ![obj des 2](./images/16.JPG)
 
-### Destructuring arrays
+## Destructuring arrays
 
 This is just like dealing with the destructuring objects in previous section. 
 
@@ -317,7 +317,7 @@ The **' , '** defines the number of elements in the array that we need to skip. 
 ![arr des 2](./images/18.JPG)
 ![arr des 3](./images/19.JPG)
 
-### Restructuring
+## Restructuring
 
 Same as destructuring the object, we can restructure object from available variables. 
 
@@ -352,7 +352,7 @@ The output of the restructuring eample is generated as below.
 
 ![res](./images/20.JPG)
 
-### Spread and rest operator
+## Spread and rest operator
 
 For this operator, resct JS uses `...`. This is used to combine two arrays of objects together. The first example shows that how it can be used in combining arrays. 
 
@@ -402,7 +402,7 @@ Output:
 
 ![rest](./images/23.JPG)
 
-### Class, constructor and super
+## Class, constructor and super
 
 In early version of JS, the classes were not directly defined as classes. The classes were defined as functions (in JS function acts as an object) first, and then a method to that function was defined using ```prototype``` keyword, to introduce what does it do. The new variable under that function behaves according the _function_ and the _method_ defined. 
 
@@ -483,7 +483,320 @@ Output:
 
 ![class 3](./images/26.JPG)
 
-## React JS
+# React JS
 
+## Installing React
 
+1. Download and install Node. Download Node from [nodejs.org](https://www.nodejs.org/). 
+2. Then go to the [react.org](https://www.react.org/). Start creating a react app using below commands. 
 
+    ```cli
+    npx create-react-app my-app
+    ```
+
+3. Then move into the `my-app` folder then type `npm start` to deploy the react web server. It will open a new window in powershell and also a new window in the web browser.
+
+Web brower look:
+
+![install react](./images/27.JPG)
+
+## React files and folders introduction
+
+1. **Project Structure**: 
+   - The project is located in the root directory inside a folder named "my-app".
+   - The main working directory is the `src` (source) folder.
+
+2. **Index.js**:
+   - `index.js` is importing `React`, `ReactDOM`, `index.css`, `App`, and `reportWebVitals` which is a function used to measure the performance of the application.
+   - `ReactDOM.createRoot`: This method is used to create a root DOM node where the React application will be rendered. It is a part of the new React 18 concurrent features.
+   - `document.getElementById('root')`: This targets the div element with the id root in the index.html file, where the React app will be mounted.
+
+3. **Public Folder**:
+   - `index.html` contains a `div` with the id `root`, where the React application will be rendered.
+
+4. **App Component**:
+   - `App.js` imports `logo.svg`, and `App.css`.   
+        * **Functional Component Definition**:
+        ```javascript
+        function App() {
+        ```
+        - `App` is defined as a functional component. Functional components are simple JavaScript functions that return JSX, a mixture of JavaScript and HTML-like syntax. JSX allows embedding JavaScript within HTML using curly braces `{}`.
+
+        * **JSX Return**:
+        ```javascript
+        return (
+            <div className="App">
+            <header className="App-header">
+        ```
+        - The component returns a JSX structure. JSX is a syntax extension for JavaScript that looks similar to HTML and is used to describe what the UI should look like.
+
+        * **Top-Level Container**:
+        ```javascript
+            <div className="App">
+        ```
+        - The component returns a `div` with the class name `App`. This `div` acts as the top-level container for the component.
+
+        * **Header Section**:
+        ```javascript
+            <header className="App-header">
+        ```
+        - Inside the top-level `div`, there is a `header` element with the class name `App-header`. This section contains the main content of the component.
+
+        * **Logo Image**:
+        ```javascript
+            <img src={logo} className="App-logo" alt="logo" />
+        ```
+        - An `img` element is used to display the imported logo image. It uses `src={logo}` to set the source of the image, `className="App-logo"` for styling, and `alt="logo"` for accessibility.
+
+        * **Edit Instructions**:
+        ```javascript
+            <p>
+                Edit <code>src/App.js</code> and save to reload.
+            </p>
+        ```
+        - A `p` (paragraph) element provides instructions to edit the `src/App.js` file and save to reload the application. The `<code>` element is used to style the file path as code.
+
+        * **Learn React Link**:
+        ```javascript
+            <a
+                className="App-link"
+                href="https://reactjs.org"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Learn React
+            </a>
+        ```
+        - An anchor (`a`) element provides a link to the React documentation. The link opens in a new tab (`target="_blank"`) and uses `rel="noopener noreferrer"` for security reasons. The `className="App-link"` is used for styling.
+
+        * **Closing Tags**:
+        ```javascript
+            </header>
+        </div>
+        ```
+        - The closing tags for the `header` and `div` elements wrap up the structure of the component.
+
+5. **Live Reloading**:
+   - Any changes made to the React components automatically reload the application, reflecting changes immediately.
+
+## Storing data in component state via ajax call
+
+Certainly! Here is the detailed explanation with thorough details filled in according to the given code:
+
+### 1. **Cleanup and Preparation**
+   - **Removed Unnecessary Imports, Components, and Hardcoded Data**: In transitioning from an example or initial setup, any unused imports, such as `React.Component`, `componentWillMount`, `constructor`, and hardcoded data, were removed. This streamlined the code and prepared it for dynamic data fetching.
+   - **Decided to Make an API Call**: Instead of using dummy data which is common in initial setups or tutorials, the decision was made to fetch real data from an API. This approach mirrors a real-world scenario where data is often fetched from external sources.
+
+### 2. **Installing Axios to Make the API Calls**
+   - **Installed Axios**: Axios, a popular promise-based HTTP client, was chosen for making the API calls due to its ease of use and powerful features. It simplifies the process of making requests and handling responses in JavaScript.
+   - **Installation Command**: To install Axios, the command `npm install axios` or `yarn add axios` was run in the terminal. This added Axios to the project dependencies, making it available for import and use in the project.
+
+### 3. **Setting Up State**
+   - **Introduced State in React**: The concept of state in React was introduced to manage data fetched from the API. State is a built-in object that allows components to create and manage their own data.
+   - **Using `useState` Hook**: Instead of using a constructor as in class components, the `useState` hook was used to initialize the state. The `useState` hook takes an initial state value (an empty array in this case) and returns an array containing the state variable (`users`) and a function (`setUsers`) to update the state.
+
+### 4. **Making the API Call**
+   - **`useEffect` Hook**: The `useEffect` hook was utilized to handle side effects, such as fetching data. Unlike class components, functional components do not have lifecycle methods like `componentWillMount` or `componentDidMount`. Instead, `useEffect` provides a way to perform side effects in function components.
+   - **API Call with Axios**: Inside `useEffect`, an Axios GET request was made to `https://api.randomuser.me/?nat=US&results=5` to fetch 5 random users from the US. The empty dependency array `[]` ensures that the effect runs only once, mimicking `componentDidMount` behavior.
+
+### 5. **Handling the API Response**
+   - **Using `.then` to Handle the Response**: The `.then` method was used to handle the promise returned by Axios. Once the data is fetched successfully, the response is logged to the console for debugging purposes.
+   - **Updating the State**: The `setUsers` function (from `useState`) was used to update the `users` state with the fetched data. Specifically, `response.data.results` was extracted and set to the `users` state. Using `setState` or its equivalent ensures that React is aware of the state change and triggers a re-render of the component.
+
+### 6. **Rendering Data**
+   - **Initial Render Message**: The `return` statement within the functional component currently returns a simple `<div>` element with the text "We are back!". This can be expanded later to dynamically render the fetched user data.
+   - **Future Data Rendering**: The next step would involve using the `users` state to dynamically render user data within the JSX. This can be done using array methods like `map` to iterate over the `users` array and generate corresponding UI elements for each user.
+   - **React Developer Tools**: The state can be inspected using React Developer Tools, a browser extension that allows developers to inspect React component hierarchies and state. This helps confirm that the data has been fetched correctly and is being managed properly within the component.
+
+Here is the code again for reference:
+```js
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import axios from 'axios';
+
+function App() {
+  // state
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    axios('https://api.randomuser.me/?nat=US&results=5')
+      .then(response => {
+        console.log(response);
+        setUsers(response.data.results);
+      })
+      .catch(error => console.error('Error fetching users:', error));
+  }, []); // Empty dependency array means this effect runs once when the component mounts
+
+  return <div className="App">We are back!</div>;
+}
+
+export default App;
+```
+
+Output:
+
+![ajax call](./images/28.JPG)
+
+## Rendering state data using map
+
+### Rendering Users from State
+
+Here, we try to render users from users array in API using state. The code example is as follows.
+
+```javascript
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import axios from 'axios';
+
+function App() {
+  // State to hold user data
+  const [users, setUsers] = useState([]);
+
+  // Fetching data from API
+  useEffect(() => {
+    axios('https://api.randomuser.me/?nat=US&results=5')
+      .then(response => {
+        setUsers(response.data.results);
+      })
+      .catch(error => console.error('Error fetching users:', error));
+  }, []);
+
+  return (
+    <div className="App">
+      {users.map(user => (
+        <div key={user.login.uuid}>
+          <p>{user.cell}</p>
+          <p>{`${user.name.first} ${user.name.last}`}</p>
+          <p>{user.email}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default App;
+```
+
+1. **Mapping Over State**:
+   - Inside the `return` statement of the `App` component, we use JavaScript embedded in JSX by wrapping it in curly braces `{}`.
+   - We call `users.map(user => ...)`, which iterates over the `users` array in the state and returns a new array of JSX elements for each user.
+
+2. **Rendering User Details**:
+   - For each user, we return a `<div>` element containing the user's cell phone, full name, and email.
+   - We use `user.login.uuid` as a unique key for each user to help React identify which items have changed, are added, or are removed.
+
+To improve the user experience while data is being fetched, we can introduce a loading state.
+
+```javascript
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import axios from 'axios';
+
+function App() {
+  // State to hold user data and loading status
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetching data from API
+  useEffect(() => {
+    axios('https://api.randomuser.me/?nat=US&results=5')
+      .then(response => {
+        setUsers(response.data.results);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching users:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  return (
+    <div className="App">
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        users.map(user => (
+          <div key={user.login.uuid}>
+            <p>{user.cell}</p>
+            <p>{`${user.name.first} ${user.name.last}`}</p>
+            <p>{user.email}</p>
+          </div>
+        ))
+      )}
+    </div>
+  );
+}
+
+export default App;
+```
+
+1. **State for Loading**:
+   - Introduced a new state variable `loading` initialized to `true`.
+   - This state indicates whether the data is still being loaded.
+
+2. **Updating Loading State**:
+   - After fetching data successfully, we set `loading` to `false`.
+   - If there's an error fetching data, we also set `loading` to `false` to stop the loading indicator.
+
+3. **Conditional Rendering**:
+   - If `loading` is `true`, we display a loading message.
+   - Once loading is complete (`loading` is `false`), we map over the `users` array and render the user details.
+
+To improve code maintainability, we can extract the API call logic into a separate function.
+
+```javascript
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import axios from 'axios';
+
+function App() {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Function to fetch users
+  const fetchUsers = () => {
+    axios('https://api.randomuser.me/?nat=US&results=5')
+      .then(response => {
+        setUsers(response.data.results);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching users:', error);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  return (
+    <div className="App">
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        users.map(user => (
+          <div key={user.login.uuid}>
+            <p>{user.cell}</p>
+            <p>{`${user.name.first} ${user.name.last}`}</p>
+            <p>{user.email}</p>
+          </div>
+        ))
+      )}
+    </div>
+  );
+}
+
+export default App;
+```
+
+1. **Extracted `fetchUsers` Function**:
+   - Created a `fetchUsers` function to handle the API call and state updates.
+   - Moved the API call logic from `useEffect` to `fetchUsers`.
+
+2. **Calling `fetchUsers` in `useEffect`**:
+   - In `useEffect`, we simply call `fetchUsers` to initiate the API call when the component mounts.
+
+Output:
+
+![ajax state](./images/29.JPG)
