@@ -1,31 +1,53 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
 import axios from 'axios';
+import './App.css';
+import Loading from './Loading';
 
-function App() {
-  // State to hold user data
+const App = () => {
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Fetching data from API
-  useEffect(() => {
-    axios('https://api.randomuser.me/?nat=US&results=5')
+  const fetchUsers = () => {
+    setLoading(true);
+    axios.get('https://api.randomuser.me/?nat=US&results=5')
       .then(response => {
-        setUsers(response.data.results);
+        setUsers(prevUsers => [...prevUsers, ...response.data.results]);
+        setLoading(false);
       })
-      .catch(error => console.error('Error fetching users:', error));
+      .catch(error => {
+        console.error('Error fetching users:', error);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    fetchUsers();
   }, []);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetchUsers();
+    console.log('More users loaded.');
+  };
 
   return (
     <div className="App">
-      {users.map(user => (
-        <div key={user.login.uuid}>
-          <p>{user.cell}</p>
-          <p>{`${user.name.first} ${user.name.last}`}</p>
-          <p>{user.email}</p>
-        </div>
-      ))}
+      <form onSubmit={handleSubmit}>
+        <input type="submit" value="Load Users" />
+      </form>
+      {loading ? (
+        <Loading message="Loading users..." />
+      ) : (
+        users.map(user => (
+          <div key={user.login.uuid} style={{ border: '1px solid #ccc', padding: '10px', margin: '10px 0' }}>
+            <p>{user.cell}</p>
+            <p style={{color: 'red'}}>{`${user.name.first} ${user.name.last}`}</p>
+            <p>{user.email}</p>
+          </div>
+        ))
+      )}
     </div>
   );
-}
+};
 
 export default App;

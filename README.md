@@ -639,8 +639,6 @@ Output:
 
 ## Rendering state data using map
 
-### Rendering Users from State
-
 Here, we try to render users from users array in API using state. The code example is as follows.
 
 ```javascript
@@ -800,3 +798,452 @@ export default App;
 Output:
 
 ![ajax state](./images/29.JPG)
+
+## Conditional rendering
+
+The conditional rendering has been showcased in above code. A simple go through of the code is shown below. 
+
+1. **State Management**:
+   - Introduced a `loading` state along with the `users` state.
+   - By default, set `loading` to `true` to indicate that data fetching is in progress.
+
+2. **Setting Loading State**:
+   - Before making the API call, set `loading` to `true` to indicate loading.
+   - Once the API call completes, set `loading` to `false`.
+
+3. **Conditional Rendering**:
+   - Used a ternary operator to conditionally render the loading message or the list of users based on the `loading` state.
+
+
+## Imports exports props
+
+1. **Creating a Separate Component**:
+   - Learn how to create a separate, reusable component in React.
+   - Understand the difference between class components and functional components, and when to use each.
+   - Focus on creating a stateless functional component for simplicity.
+
+2. **Implementing the Loading Component**:
+   - Create a simple `Loading` component that displays a loading message.
+   - Use the `export default` statement for single-component exports.
+   - Import and use the `Loading` component in the main `App` component.
+
+3. **Conditional Rendering with the Loading Component**:
+   - Apply conditional rendering in the `App` component to show the `Loading` component when data is being fetched.
+   - Render the user list when the data fetching is complete.
+
+4. **Exporting and Importing Components**:
+   - Differentiate between default exports and named exports.
+   - Understand how to import components using curly braces for named exports.
+
+5. **Passing Props to Components**:
+   - Learn how to pass data from a parent component to a child component using props.
+   - Destructure props in the functional component for simplicity.
+   - Pass dynamic messages or state data to the `Loading` component.
+
+6. **Reusability of Components**:
+   - Understand the importance of reusable components.
+   - Create a flexible `Loading` component that can be used with different messages in different parts of the application.
+
+
+A detailed guide in creating the import prop is shown below. 
+
+1. Create a new file named `Loading.js` for the `Loading` component.
+
+```javascript
+// Loading.js
+import React from 'react';
+
+// Stateless functional component
+const Loading = ({ message }) => {
+  return <h2>{message}</h2>;
+};
+
+export default Loading;
+```
+
+2. Implementing the Loading Component
+
+Import the `Loading` component in the `App` component.
+
+```javascript
+// App.js
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import axios from 'axios';
+import Loading from './Loading';
+
+function App() {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchUsers = () => {
+    setLoading(true);
+    axios('https://api.randomuser.me/?nat=US&results=5')
+      .then(response => {
+        setUsers(response.data.results);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching users:', error);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  return (
+    <div className="App">
+      {loading ? (
+        <Loading message="Loading..." />
+      ) : (
+        users.map(user => (
+          <div key={user.login.uuid}>
+            <p>{user.cell}</p>
+            <p>{`${user.name.first} ${user.name.last}`}</p>
+            <p>{user.email}</p>
+          </div>
+        ))
+      )}
+    </div>
+  );
+}
+
+export default App;
+```
+
+3. Conditional Rendering with the Loading Component
+
+Using the ternary operator, conditionally render the `Loading` component or the list of users based on the `loading` state.
+
+4. Exporting and Importing Components
+
+Example of exporting multiple components:
+
+```javascript
+// MultipleComponents.js
+import React from 'react';
+
+export const ComponentOne = () => <div>Component One</div>;
+export const ComponentTwo = () => <div>Component Two</div>;
+```
+
+Importing named exports:
+
+```javascript
+// App.js
+import { ComponentOne, ComponentTwo } from './MultipleComponents';
+```
+
+5. Passing Props to Components
+
+Pass dynamic messages to the `Loading` component and destructure props directly in the function parameters.
+
+```javascript
+// Loading.js
+import React from 'react';
+
+// Stateless functional component with destructured props
+const Loading = ({ message }) => {
+  return <h2>{message}</h2>;
+};
+
+export default Loading;
+```
+
+```javascript
+// App.js
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import axios from 'axios';
+import Loading from './Loading';
+
+function App() {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchUsers = () => {
+    setLoading(true);
+    axios('https://api.randomuser.me/?nat=US&results=5')
+      .then(response => {
+        setUsers(response.data.results);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching users:', error);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  return (
+    <div className="App">
+      {loading ? (
+        <Loading message="Fetching user data, please wait..." />
+      ) : (
+        users.map(user => (
+          <div key={user.login.uuid}>
+            <p>{user.cell}</p>
+            <p>{`${user.name.first} ${user.name.last}`}</p>
+            <p>{user.email}</p>
+          </div>
+        ))
+      )}
+    </div>
+  );
+}
+
+export default App;
+```
+
+6. Reusability of Components
+
+By passing different messages or data to the `Loading` component, it can be reused in different parts of the application.
+
+```javascript
+// AnotherComponent.js
+import React from 'react';
+import Loading from './Loading';
+
+const AnotherComponent = () => {
+  return (
+    <div>
+      <Loading message="Loading cart items..." />
+    </div>
+  );
+};
+
+export default AnotherComponent;
+```
+
+Output:
+
+![imports](./images/30.JPG)
+
+
+## Handling click events
+
+The code can be go through step-by-step. 
+
+1. **Adding a Form Element**:
+  - Create a form with a submit button.
+  - The form will have an input of type "submit" with the value "Load Users".
+  - When the submit button is clicked, it will trigger a function to load more users.
+
+2. **Handling Submit Event**:
+  - Create a `handleSubmit` function to manage the form submission.
+  - Prevent the default form submission behavior using `event.preventDefault()`.
+  - Call the `fetchUsers` function within `handleSubmit` to load more users.
+  - Log a message to the console for debugging.
+
+3. **Binding Methods in Class Components**:
+  - Bind the `handleSubmit` method in the constructor to ensure the correct `this` context.
+
+4. **Fetching New Users**:
+  - When the form is submitted, the `fetchUsers` function is called to load more users.
+  - Merge the newly fetched users with the existing users in the state using the spread operator.
+  - Update the state with the combined list of users.
+
+5. **Preventing Page Reload**:
+  - Ensure that the page does not reload when the form is submitted by correctly binding the event handler and using `event.preventDefault()`.
+
+6. **Appending New Users**:
+  - Append new users to the existing list in the state each time the "Load Users" button is clicked.
+  - Use the spread operator to concatenate the existing users with the newly fetched users.
+
+In below code, the form has been added with the handling component. 
+
+```javascript
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './App.css';
+import Loading from './Loading';
+
+const App = () => {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchUsers = () => {
+    setLoading(true);
+    axios.get('https://api.randomuser.me/?nat=US&results=5')
+      .then(response => {
+        setUsers(prevUsers => [...prevUsers, ...response.data.results]);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching users:', error);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetchUsers();
+    console.log('More users loaded.');
+  };
+
+  return (
+    <div className="App">
+      <form onSubmit={handleSubmit}>
+        <input type="submit" value="Load Users" />
+      </form>
+      {loading ? (
+        <Loading message="Loading users..." />
+      ) : (
+        users.map(user => (
+          <div key={user.login.uuid}>
+            <p>{user.cell}</p>
+            <p>{`${user.name.first} ${user.name.last}`}</p>
+            <p>{user.email}</p>
+          </div>
+        ))
+      )}
+    </div>
+  );
+};
+
+export default App;
+```
+
+Each time the _load user_ button is pressed, 5 more users added to the fetched list.
+
+## Destructuring, inline styling and keys
+
+Here, the code is changed so that it can be cleaner to read and use. Object destructuring can still be relevant in the functional component code to simplify the handling of state and props. However, in the code provided, since the state is directly accessed through hooks, there isn't a need to destructure the state object as we would in a class component.
+
+1. **Destructuring State in Functional Components**:
+   - In functional components, state is often managed with hooks like `useState`. The destructuring of the state happens when you call `useState`, so there's no need to further destructure it within the component.
+
+2. **Destructuring Props**:
+   - If your functional component receives props, destructuring them at the beginning of your component can simplify the code. 
+
+Here’s an example.
+
+```javascript
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './App.css';
+import Loading from './Loading';
+
+const App = (props) => {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true); //Destructuring
+
+  const fetchUsers = () => {
+    setLoading(true);
+    axios.get('https://api.randomuser.me/?nat=US&results=5')
+      .then(response => {
+        setUsers(prevUsers => [...prevUsers, ...response.data.results]);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching users:', error);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetchUsers();
+    console.log('More users loaded.');
+  };
+
+  return (
+    <div className="App">
+      <form onSubmit={handleSubmit}>
+        <input type="submit" value="Load Users" />
+      </form>
+      {loading ? (
+        <Loading message="Loading users..." />
+      ) : (
+        users.map(user => (
+          <div key={user.login.uuid}> 
+            <p>{user.cell}</p>
+            <p>{`${user.name.first} ${user.name.last}`}</p>
+            <p>{user.email}</p>
+          </div>
+        ))
+      )}
+    </div>
+  );
+};
+
+export default App;
+```
+
+### Using Inline Styling:
+
+Here’s how inline styling and the unique key is added to tha `App` component. In React, when rendering lists, each element must have a unique key prop. This helps React identify which items have changed, are added, or removed. This ensures each element in a list has a unique `key` prop to avoid warnings and improve performance.
+
+```javascript
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './App.css';
+import Loading from './Loading';
+
+const App = () => {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchUsers = () => {
+    setLoading(true);
+    axios.get('https://api.randomuser.me/?nat=US&results=5')
+      .then(response => {
+        setUsers(prevUsers => [...prevUsers, ...response.data.results]);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching users:', error);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetchUsers();
+    console.log('More users loaded.');
+  };
+
+  return (
+    <div className="App">
+      <form onSubmit={handleSubmit}>
+        <input type="submit" value="Load Users" />
+      </form>
+      {loading ? (
+        <Loading message="Loading users..." />
+      ) : (
+        users.map(user => (
+            //Using unique keys
+          <div key={user.login.uuid} style={{ border: '1px solid #ccc', padding: '10px', margin: '10px 0' }}>
+            <p>{user.cell}</p>
+            <p>{`${user.name.first} ${user.name.last}`}</p>
+            <p>{user.email}</p>
+          </div>
+        ))
+      )}
+    </div>
+  );
+};
+
+export default App;
+```
+
+Output:
+
+![styles](./images/31.JPG)
