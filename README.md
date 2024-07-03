@@ -1022,7 +1022,7 @@ export default AnotherComponent;
 
 Output:
 
-![imports](./images/30.JPG)
+![imports](./images/30.png)
 
 
 ## Handling click events
@@ -1247,3 +1247,651 @@ export default App;
 Output:
 
 ![styles](./images/31.JPG)
+
+# React Hooks
+
+## React hooks and why we use class components
+
+React introduced hooks in version 16.8 to address the limitations of functional components. Hooks are special functions that enable functional components to use state and other React features traditionally limited to class components. There are several benefits. 
+    - Simplify component logic by avoiding the complexity of lifecycle methods.
+    - Promote code reuse and composition through custom hooks.
+    - Facilitate the use of functional components for all purposes, reducing the need to switch between functional and class components.
+
+- **Class Components**:
+  - Traditionally used for managing local component state and lifecycle methods.
+  - Required for complex components with state and side effects before hooks were introduced.
+  - Example of a class component managing state:
+    ```javascript
+    class Example extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          count: 0
+        };
+      }
+
+      render() {
+        return (
+          <div>
+            <p>You clicked {this.state.count} times</p>
+            <button onClick={() => this.setState({ count: this.state.count + 1 })}>
+              Click me
+            </button>
+          </div>
+        );
+      }
+    }
+    ```
+  - Drawbacks:
+    - Verbose syntax with constructors and lifecycle methods.
+    - Complexity in handling state and side effects.
+    - Harder to share and reuse logic between components.
+
+- **Functional Components**:
+  - Prior to hooks, they were stateless and used purely for presentational purposes.
+  - Simplified syntax without the need for `this` keyword or lifecycle methods.
+  - Hooks enable functional components to manage state and side effects, making them fully capable for all component logic.
+  
+- **useState Hook**:
+  - Introduces state management in functional components.
+
+    ```javascript
+    const [state, setState] = useState(initialState);
+    ```
+  - Example:
+    ```javascript
+    import React, { useState } from 'react';
+
+    function Example() {
+      const [count, setCount] = useState(0);
+
+      return (
+        <div>
+          <p>You clicked {count} times</p>
+          <button onClick={() => setCount(count + 1)}>
+            Click me
+          </button>
+        </div>
+      );
+    }
+    ```
+  - Advantages:
+    - Simple and concise state management.
+    - Enables multiple state variables within a single component.
+  
+- **useEffect Hook**:
+  - Handles side effects in functional components, such as data fetching, subscriptions, and manual DOM manipulations.
+  - Replaces lifecycle methods (`componentDidMount`, `componentDidUpdate`, and `componentWillUnmount`).
+  - Syntax:
+    ```javascript
+    useEffect(() => {
+      // Side effect logic here
+
+      return () => {
+        // Cleanup logic here (optional)
+      };
+    }, [dependencies]);
+    ```
+  - Example:
+    ```javascript
+    import React, { useEffect, useState } from 'react';
+
+    function Example() {
+      const [count, setCount] = useState(0);
+
+      useEffect(() => {
+        document.title = `You clicked ${count} times`;
+
+        return () => {
+          // Optional cleanup logic
+        };
+      }, [count]); // Dependency array
+
+      return (
+        <div>
+          <p>You clicked {count} times</p>
+          <button onClick={() => setCount(count + 1)}>
+            Click me
+          </button>
+        </div>
+      );
+    }
+    ```
+  - Advantages:
+    - Consolidates side effect logic in one place.
+    - Simplifies component lifecycle management.
+    - Enables better organization and cleanup of side effects.
+
+**Benefits of Using Hooks:**
+  - Hooks drastically reduce boilerplate code by eliminating the need for class component syntax.
+  - State and side effects are managed within functional components, streamlining the development process.
+  - Code readability and maintenance are improved through clearer and more concise component logic.
+  - Hooks facilitate the use of modern JavaScript features like destructuring and arrow functions.
+
+## Counter app using class
+
+Code:
+
+```js
+//App.js
+
+import React, { Component } from "react";
+  class App extends Component {
+    state = {
+      count: 0
+    };
+    increment = () => {
+      this.setState({
+        count: this.state.count + 1
+      });
+    };
+  
+    render() {
+      return (
+        <div>
+          <h2>counter app</h2>
+          <button onClick={this.increment}>
+            Clicked {this.state.count} times
+          </button>
+        </div>
+      );
+    }
+  }
+
+export default App;
+```
+
+In the output window, every time the button is clicked, the number increases by one. 
+
+Output:
+
+![hooks 1](./images/32.JPG)
+
+## useState hook
+
+In this section, the same program in previous section will be written with _useState_ hook and compare the changes. Initially, the counter app was written as a class component that managed state with `this.state` and updated state using `this.setState`. This will demonstrate how to convert this to a functional component by utilizing the `useState` hook. 
+
+The `useState` hook allows functional components to manage state without the need for class syntax. A state variable `count` and a function `setCount` is declared to update this state, simplifying the state management process. Additionally, an increment method using `setCount` is created to update the `count` value. This refactoring eliminated the need for `this` keyword and lifecycle methods, streamlining the code significantly. The functional component was then rendered with a simple `return` statement, making the code more concise and readable. 
+
+Code:
+
+```js
+import React, { Component, useState } from "react";
+
+const App = () => {
+  const [count, setCount] = useState(0)
+
+  const increment = () => {
+    setCount(count + 1)
+  }
+
+return (
+  <div>
+    <h2>Counter app</h2>
+    <button onClick={increment}>Clicked {count} times</button>
+  </div>
+); 
+}
+
+export default App;
+```
+
+## useEffect hook
+
+Here, we explore the use of the `useEffect` hook to handle side effects in functional components, replacing the lifecycle methods `componentDidMount` and `componentDidUpdate` used in class components. Side effects in React refer to actions like updating the document title or fetching data when the state changes. To illustrate this, we edut the previous code to update the document title based on a counter's value.
+
+Initially, we demonstrate the class component approach by creating two lifecycle methods: `componentDidMount` to set the document title when the component mounts, and `componentDidUpdate` to update the title whenever the state changes. This involved writing multiple lifecycle methods to achieve the desired functionality.
+
+Next, we refactore the class component into a functional component using the `useEffect` hook. The `useEffect` hook takes a function as an argument and runs this function every time the component updates. We used it to update the document title whenever the counter's state changed. This approach simplified the code, as we no longer needed multiple lifecycle methods; instead, we used a single hook to handle the side effects.
+
+Both class component program and functional component program is added for the reference. 
+
+```js
+import React, { Component, useState, useEffect } from "react";
+
+const App = () => {
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    document.title = `Clicked ${count} times`
+  })
+
+  const increment = () => {
+    setCount(count + 1)
+  }
+
+return (
+  <div>
+    <h2>Counter app</h2>
+    <button onClick={increment}>Clicked {count} times</button>
+  </div>
+); 
+}
+
+// class App extends Component {
+//   state = {
+//     count: 0
+//   };
+//   increment = () => {
+//     this.setState({
+//       count: this.state.count + 1
+//     });
+//   };
+
+//   componentDidMount() {
+//     document.title = `Clicked ${this.state.count} times`
+//   }
+
+//   componentDidUpdate() {
+//     document.title = `Clicked ${this.state.count} times`
+//   }
+
+//   render() {
+//   return (
+//     <div>
+//       <h2>counter app</h2>
+//       <button onClick={this.increment}>
+//         Clicked {this.state.count} times
+//       </button>
+//     </div>
+//   );
+//   }
+// }
+
+export default App;
+```
+
+Output:
+
+![useEffect hook](./images/33.JPG)
+
+## News app using hooks
+
+This provides a concise breakdown of creating a Hacker News client using React hooks, showcasing the use of `useState` and `useEffect` to manage state and side effects efficiently in a functional component.
+
+
+1. **Create a Functional Component**
+   ```javascript
+   const App = () => {
+     // state
+   };
+   ```
+
+2. **Initialize State with useState Hook**
+   ```javascript
+   const [news, setNews] = useState([]);
+   ```
+
+3. **Write fetchNews Method**
+   ```javascript
+   const fetchNews = () => {
+    fetch("http://hn.algolia.com/api/v1/search?query=react")
+      .then(result => result.json())
+      // .then(data => console.log(data));
+      .then(data => setNews(data.hits))
+      .catch(error => console.log(error));
+  };
+   ```
+
+4. **Import and Use useEffect Hook**
+   ```javascript
+   useEffect(() => {
+     fetchNews();
+   });
+   ```
+
+5. **Return JSX to Display the News**
+   ```javascript
+   return(
+    <div>
+      <h2>News</h2>
+      {news.map((n,i) => (<p key={i}>{n.title}</p>))}
+
+    </div>
+  )
+   ```
+
+6. **Combine All Parts**
+  ```javascript
+  import React, { Component, useState, useEffect } from "react";
+
+  const App = () => {
+    // state
+    const [news, setNews] = useState([])
+    // fetch news
+    const fetchNews = () => {
+      fetch("http://hn.algolia.com/api/v1/search?query=react")
+        .then(result => result.json())
+        // .then(data => console.log(data));
+        .then(data => setNews(data.hits))
+        .catch(error => console.log(error));
+    };
+
+    useEffect(() => {
+      fetchNews()
+    })
+    return(
+      <div>
+        <h2>News</h2>
+        {news.map((n,i) => (<p key={i}>{n.title}</p>))}
+
+      </div>
+    )
+
+  };
+
+  export default App;
+  ```
+
+## Search news on input change
+
+In this section, we will enhance our Hacker News client by adding a search form. This form will allow users to type in a query and fetch news articles related to that query. This approach ensures that the application fetches news articles based on user input and dynamically updates the content displayed on the page. The use of React hooks like `useState` and `useEffect` simplifies state management and side effects, making the code cleaner and more efficient.
+
+1. **Set Up the Search Form**
+
+   Add a search form in the render method to capture user input. A form with an input field allows users to type their search queries. The form is controlled with `value` and `onChange` attributes.
+
+   ```javascript
+   return(
+    <div>
+      <h2>News</h2>
+      <form>
+        <input type="text" value={searchQuery} onChange={handleChange}/>
+        <button>Search</button>
+      </form>
+      {news.map((n, i) => (
+        <p key={i}>{n.title}</p>))}
+
+    </div>
+  )
+
+   ```
+
+2. **Manage Search Query State**
+
+   Add a new state for managing the search query. The `searchQuery` state keeps track of the current query. The default value is set to 'react'.
+   ```javascript
+   const [searchQuery, setSearchQuery] = useState('react');
+   ```
+
+3. **Handle Input Change**
+
+   Implement a method to handle changes in the input field. The `handleChange` method updates the `searchQuery` state whenever the input field changes.
+
+   ```javascript
+   const handleChange = (e) => {
+     setSearchQuery(e.target.value);
+   };
+   ```
+
+4. **Update fetchNews Method**
+
+   Modify the fetchNews method to use the search query from the state. The `fetchNews` method dynamically constructs the API URL using the current `searchQuery` state.
+
+   ```javascript
+   const fetchNews = () => {
+    fetch(`http://hn.algolia.com/api/v1/search?query=${searchQuery}`)
+      .then(result => result.json())
+      // .then(data => console.log(data));
+      .then(data => setNews(data.hits))
+      .catch(error => console.log(error));
+  };
+   ```
+
+5. **Use useEffect with Dependency**
+
+   Ensure that the useEffect hook runs only when the search query changes. The `useEffect` hook runs `fetchNews` when the component mounts and whenever `searchQuery` changes.
+
+   ```javascript
+   useEffect(() => {
+     fetchNews();
+   }, [searchQuery]);
+   ```
+
+The final code appears as below.
+
+```javascript
+import React, { Component, useState, useEffect } from "react";
+
+const App = () => {
+// state
+const [news, setNews] = useState([])
+const [searchQuery, setSearchQuery] = useState('react')
+
+  // fetch news
+const fetchNews = () => {
+  fetch(`http://hn.algolia.com/api/v1/search?query=${searchQuery}`)
+    .then(result => result.json())
+    // .then(data => console.log(data));
+    .then(data => setNews(data.hits))
+    .catch(error => console.log(error));
+};
+
+useEffect(() => {
+  fetchNews();
+}, [searchQuery])
+
+const handleChange = (e) => {
+  setSearchQuery(e.target.value)
+}
+
+return(
+  <div>
+    <h2>News</h2>
+    <form>
+      <input type="text" value={searchQuery} onChange={handleChange}/>
+      <button>Search</button>
+    </form>
+    {news.map((n, i) => (
+      <p key={i}>{n.title}</p>))}
+
+  </div>
+)
+
+};
+
+export default App;
+```
+
+Output:
+
+![news app 1](./images/34.JPG)
+
+## Controlling useEffect's behaviour
+
+In this section, we will modify our Hacker News client to fetch news articles only when the user submits a search query by hitting the "Search" button, instead of making an API request on each keystroke. This approach reduces unnecessary API calls and improves efficiency and enhances the user experience by ensuring that API calls are made only when needed, and not on every keystroke, making the application more efficient and responsive.
+
+The form submission is now handled by the `handleSubmit` method, which prevents the default behavior and sets the URL state with the user input.
+The `url` state is updated based on the user's search query. This state change triggers the `useEffect` hook to fetch the news.
+The `useEffect` hook runs the `fetchNews` method only when the URL state changes, which happens when the user submits the form.
+By updating the URL state only on form submission, we reduce unnecessary API requests made on each keystroke, improving performance.
+
+1. First add form submission handling. Implement the `onSubmit` method for the form. 
+2. State for managing URL is configured next.
+3. To handle form submission, create a method which also updates the URL state, and prevents the default form behavior:
+4. Next, modify `useEffect` hook to run based on changes to the URL state instead of the search query.
+5. Update fetchNews method to ensure the `fetchNews` method uses the dynamic URL state.
+
+Final Code:
+
+```javascript
+import React, { Component, useState, useEffect } from "react";
+
+const App = () => {
+  // state
+const [news, setNews] = useState([])
+const [searchQuery, setSearchQuery] = useState('react')
+const [url, setUrl] = useState('http://hn.algolia.com/api/v1/search?query=react')
+
+// fetch news
+const fetchNews = () => {
+  fetch(url)
+    .then(result => result.json())
+    // .then(data => console.log(data));
+    .then(data => setNews(data.hits))
+    .catch(error => console.log(error));
+};
+
+useEffect(() => {
+  fetchNews();
+}, [url])
+
+const handleChange = (e) => {
+  setSearchQuery(e.target.value)
+}
+
+const handleSubmit = e => {
+  e.preventDefault()
+  setUrl(`http://hn.algolia.com/api/v1/search?query=${searchQuery}`)
+}
+
+return(
+  <div>
+    <h2>News</h2>
+    <form onSubmit={handleSubmit}>
+      <input type="text" value={searchQuery} onChange={handleChange}/>
+      <button>Search</button>
+    </form>
+    {news.map((n, i) => (
+      <p key={i}>{n.title}</p>))}
+
+  </div>
+)
+
+};
+
+export default App;
+```
+
+## Loading
+
+Here, we enhance our Hacker News client by adding a loading indicator to provide a better user experience. The loading indicator will show while the data is being fetched from the API, and disappear once the data is available. 
+
+1. For this upgrade we only need to add few code lines. The a new state should be added to manage the loading state. 
+2. The `fetchNews` method should be updated with the loading status before and after the data is available. 
+3. At last, the loading status should be indicated in the client interface. 
+
+The changed code is as follows. 
+
+```js
+import React, { Component, useState, useEffect } from "react";
+
+const App = () => {
+  // state
+const [news, setNews] = useState([])
+const [searchQuery, setSearchQuery] = useState('react')
+const [url, setUrl] = useState('http://hn.algolia.com/api/v1/search?query=react')
+const [loading, setLoading] = useState(false)
+
+// fetch news
+const fetchNews = () => {
+  //set loading here
+  setLoading(true)
+  fetch(url)
+    .then(result => result.json())
+    // .then(data => console.log(data));
+    .then(data => (setNews(data.hits), setLoading(false)))
+    .catch(error => console.log(error));
+};
+
+useEffect(() => {
+  fetchNews();
+}, [url])
+
+const handleChange = (e) => {
+  setSearchQuery(e.target.value)
+}
+
+const handleSubmit = e => {
+  e.preventDefault()
+  setUrl(`http://hn.algolia.com/api/v1/search?query=${searchQuery}`)
+}
+
+return(
+  <div>
+    <h2>News</h2>
+    {loading ? <h2>Loading...</h2> : ""}
+    <form onSubmit={handleSubmit}>
+      <input type="text" value={searchQuery} onChange={handleChange}/>
+      <button>Search</button>
+    </form>
+    {news.map((n, i) => (
+      <p key={i}>{n.title}</p>))}
+
+  </div>
+)
+
+};
+
+export default App;
+```
+
+The output of the above chnage is visible for very small time as below. 
+
+Output:
+
+![news app 2](./images/35.png)
+
+## Code organization
+
+The code is rearranged with the help of hooks.
+
+```js
+import React, { Component, useState, useEffect } from "react";
+
+const App = () => {
+  // state
+const [news, setNews] = useState([])
+const [searchQuery, setSearchQuery] = useState('react')
+const [url, setUrl] = useState('http://hn.algolia.com/api/v1/search?query=react')
+const [loading, setLoading] = useState(false)
+
+// fetch news
+const fetchNews = () => {
+  //set loading here
+  setLoading(true)
+  fetch(url)
+    .then(result => result.json())
+    // .then(data => console.log(data));
+    .then(data => (setNews(data.hits), setLoading(false)))
+    .catch(error => console.log(error));
+};
+
+useEffect(() => {
+  fetchNews();
+}, [url])
+
+const handleChange = (e) => {
+  setSearchQuery(e.target.value)
+}
+
+const handleSubmit = e => {
+  e.preventDefault()
+  setUrl(`http://hn.algolia.com/api/v1/search?query=${searchQuery}`)
+}
+
+const showLoading = () => (loading ? <h2>Loading...</h2> : "")
+
+const searchForm = () => (
+  <form onSubmit={handleSubmit}>
+    <input type="text" value={searchQuery} onChange={handleChange}/>
+    <button>Search</button>
+  </form>
+)
+
+const showNews = () => news.map((n, i) => (<p key={i}>{n.title}</p>)
+)
+
+return(
+  <div>
+    <h2>News</h2>
+    {showLoading()}
+    {searchForm()}
+    {showNews()}
+  </div>
+)
+
+};
+
+export default App;
+```
